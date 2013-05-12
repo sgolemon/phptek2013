@@ -14,7 +14,7 @@ return | Returning values
 array | Working with arrays
 global | Thread-local module globals
 inis | Declaring, binding, and using INI settings
-consts | Declarting constants
+consts | Declaring constants
 resource | Declaring and using an opaque resource type
 objects1 | Simple OOP
 objects2 | Complex OOP Into
