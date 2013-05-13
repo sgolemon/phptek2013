@@ -34,3 +34,54 @@ Modifier | Meaning
 `/` | Separate value so that changes made to it by the C implementation do not effect the PHP variable passed to the function.
 
 **Note: `(pipe)` above refers to the `|` character which github markdown gets confused about in tables.**
+
+---
+
+zval Access
+
+C Type | Base Macro | `Z_TYPE(v)`
+--- | --- | ---
+| | `IS_NULL`
+zend_uchar | `Z_BVAL(v)` | `IS_BOOL`
+long | `Z_LVAL(v)` | `IS_LONG`
+double | `Z_DVAL(v)` | `IS_DOUBLE`
+char* | `Z_STRVAL(v)` | `IS_STRING`
+int | `Z_STRLEN(v)` | `IS_STRING`
+long | `Z_RESVAL(v)` | `IS_RESOURCE`
+HashTable* | `Z_ARRVAL(v)` | `IS_ARRAY`
+HashTable* | `Z_OBJPROP(v)` | `IS_OBJECT`
+zend_class_entry* | `Z_OBJCE(v)` | `IS_OBJECT`
+zend_object_value | `Z_OBJVAL(v)` | `IS_OBJECT`
+int | `Z_OBJ_HANDLE(v)` | `IS_OBJECT`
+zend_object_handlers* | `Z_OBJ_HT(v)` | `IS_OBJECT`
+Object Handler | `Z_OBJ_HANDLER(v, h)` | `IS_OBJECT`
+HashTable* | `Z_OBJDEBUG(v, &tmp)` | `IS_OBJECT`
+
+Each of the above `Z_*()` macros accepts an immediate `zval`.  When working with a `zval*`, use `Z_*_P()`
+When working with a `zval**`, use `Z_*_PP()`.
+
+For example:
+
+```
+zval foo = getval();
+if (Z_TYPE(foo) == IS_LONG) callFunc(Z_LVAL(foo));
+```
+
+```
+zval *foo = getPval();
+if (Z_TYPE_P(foo) == IS_LONG) callFunc(Z_LVAL_P(foo));
+```
+
+```
+zval **foo = getPPval();
+if (Z_TYPE_PP(foo) == IS_LONG) callFunc(Z_LVAL_PP(foo));
+```
+
+Additionally, `HASH_OF(v)` exists as a convenience for accessing either an `IS_ARRAY` `HashTable*` or
+an `IS_OBJECT`'s property table, which is also a `HashTable*`.
+Basically the following:
+
+```
+#define HASH_OF(pzv) ((Z_TYPE_P(pzv) == IS_ARRAY) ? Z_ARRVAL_P(pzv) : \
+                      ((Z_TYPE_P(pzv) == IS_OBJECT) ? Z_OBJPROP_P(pzv) : NULL))
+```
