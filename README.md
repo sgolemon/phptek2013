@@ -1,9 +1,9 @@
 PHP Extension Writing at php|tek 2013 by Sara Golemon
 
-http://tek.phparch.com/2013
-Sheraton Gateway Suites O'Hare
-6501 North Mannheim Road
-Rosemont, Illinois 60018
+http://tek.phparch.com/2013<br/>
+Sheraton Gateway Suites O'Hare<br/>
+6501 North Mannheim Road<br/>
+Rosemont, Illinois 60018<br/>
 May 14, 2013
 
 Directory | What it demonstrates
@@ -17,7 +17,7 @@ inis | Declaring, binding, and using INI settings
 consts | Declaring constants
 resource | Declaring and using an opaque resource type
 objects1 | Simple OOP
-objects2 | Complex OOP Into
+objects2 | Complex OOP Intro
 objects3 | Complex OOP Continued
 libs | Finding and linking external libraries
 
