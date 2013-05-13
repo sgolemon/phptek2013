@@ -11,6 +11,7 @@ Directory | What it demonstrates
 hello | Very basic "Hello World" extension
 params | Accepting arguments
 return | Returning values
+fcall | Calling PHP functions
 array | Working with arrays
 global | Thread-local module globals
 inis | Declaring, binding, and using INI settings
