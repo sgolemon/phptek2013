@@ -1,0 +1,2 @@
+Namespaced function entries
+

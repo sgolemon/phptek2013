@@ -11,6 +11,7 @@ Directory | What it demonstrates
 hello | Very basic "Hello World" extension
 params | Accepting arguments
 return | Returning values
+nsfunc | Namespaced functions
 fcall | Calling PHP functions
 array | Working with arrays
 global | Thread-local module globals
