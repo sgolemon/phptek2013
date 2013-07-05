@@ -137,6 +137,7 @@ static void hello_write_prop(zval *object, zval *member, zval *value ZLK TSRMLS_
 
 static int hello_has_prop(zval *object, zval *member, int has_set_exists ZLK TSRMLS_DC) {
   zval tmp;
+  int retval = 1;
 
   if (Z_TYPE_P(member) != IS_STRING) {
     ZVAL_ZVAL(&tmp, member, 1, 0);
@@ -147,22 +148,23 @@ static int hello_has_prop(zval *object, zval *member, int has_set_exists ZLK TSR
   if (ISSTR(member, "name")) {
     if (has_set_exists == 1) { /* set */
       hello_object *objval = HELLO_FETCH_OBJECT(object);
-      return objval->name && (objval->name[0]);
-    } else { /* has/exists */
-      return 1;
+      retval = (objval->name && (objval->name[0]));
     }
   } else if (ISSTR(member, "age")) {
     if (has_set_exists == 1) { /* set */
       hello_object *objval = HELLO_FETCH_OBJECT(object);
-      return objval->age != 0;
-    } else { /* has/exists */
-      return 1;
+      retval = (objval->age != 0);
     }
+  }
+  else {
+    retval = 0;
   }
 
   if (member == &tmp) {
     zval_dtor(&tmp);
   }
+
+  return retval;
 }
 
 static void hello_unset_prop(zval *object, zval *member ZLK TSRMLS_DC) {
@@ -182,7 +184,7 @@ static zend_object_value hello_ctor_ex(hello_object **pobjval, zend_class_entry 
   zend_object_value retval;
 
   zend_object_std_init(&(objval->obj), ce TSRMLS_CC);
-  retval.handle = zend_objects_store_put(objval, NULL, (zend_objects_free_object_storage_t)hello_dtor, NULL TSRMLS_CC);
+  retval.handle = zend_objects_store_put(objval, (zend_objects_store_dtor_t)zend_objects_destroy_object, (zend_objects_free_object_storage_t)hello_dtor, NULL TSRMLS_CC);
   retval.handlers = &hello_handlers;
 
   if (pobjval) {
