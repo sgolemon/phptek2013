@@ -9,7 +9,7 @@ Specifier | C type | Description
 `L` | long | Integer with truncation
 `d` | double | Float
 `s` | char *, int | String (value and length)
-`p` | cahr *, int | String with `\0` checks
+`p` | char *, int | String with `\0` checks
 `a` | zval * | Array as a zval
 `h` | HashTable * | Array as a HashTable
 `H` | HashTable * | Array or Object Properties
